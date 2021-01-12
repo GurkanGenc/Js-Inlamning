@@ -44,13 +44,15 @@ const user = new Person(
 // Gives the list after buttons
 const displayUser = [];
 document.getElementById("add_btn").addEventListener("click", () => {
+    displayUser.push(uuidv4())
     for(let i = 0; i < document.getElementsByTagName('input').length; i++) {
         displayUser.push(document.getElementsByTagName('input')[i].value)
     }
     
-    displayUser.push(uuidv4())
     console.log(displayUser)
-    CreateElements()
+    // document.getElementById("display").innerText = displayUser
+    // document.getElementById("panel").innerText = displayUser
+    // CreateElements()
     resetForm()
 })
 
@@ -69,46 +71,37 @@ document.getElementById("add_btn").addEventListener("click", () => {
 
 // CREATE ELEMENTS
 function CreateElements() {
+    userDiv = document.createElement('div')
+    flipDiv = document.createElement('div')
+    panelDiv = document.createElement('div')
+  
+    // GER DEM CLASS & ID
+    flipDiv.className = "flip"
+    panelDiv.className = "panel"
+    userDiv.id = `${user.id}`
+    flipDiv.id = `${user.id}-flip`
+    panelDiv.id = `${user.id}-panel`
+  	
+    flipDiv.innerText = `${user.firstname}` + ` ${user.lastname}`
+  
+  	// LÄGGER TILL I DOM:EN
+    var currentDiv = document.getElementById('users');
+    currentDiv.appendChild(userDiv)
+    userDiv.appendChild(flipDiv)
+    userDiv.appendChild(panelDiv)
+
+
+
     // display = document.createElement("div")
     // display.id = "display"
-    // display.innerText = `${user.firstName}`
+    // display.innerText = `${user.fullName}`
     
-    // panel = document.createElement("p")
-    // panel.id = "panel"
+    // panel = document.createElement("div")
+    // panel.id = "panel"    
     // panel.innerText = "Id: "
-    // panel.innerText = "E-post: "
     // display.appendChild(panel)
-
-    document.getElementById("display").innerText = `${displayUser[0]}` + `${displayUser[1]}`
-
-    for(let i = 2; i < displayUser.length; i++) {
-        let panel = document.createElement('li')
-        panel.id ="panel"
-        panel.textContent = displayUser[i]
-        document.querySelector('#display').appendChild(panel)
-    }
+    // panel.appendChild("p")
 }
-
-
-// FILL PANEL!!!!
-function fillPanel() {
-    idElement = document.createElement("p")
-    idElement.innerText = `Id: ${userdata.id}`
-  
-    emailElement = document.createElement("p")
-    emailElement.innerText = `E-mail: ${userdata.email}`
-    emailElement.id = `${userdata.id}-email`
-  
-    phoneElement = document.createElement("p")
-    phoneElement.innerText = `Phone: ${userdata.phone}`
-    phoneElement.id = `${userdata.id}-phone`
-  
-    panelDiv.appendChild(idElement)
-    panelDiv.appendChild(emailElement)
-    panelDiv.appendChild(phoneElement)
-  }
-
-
 
 // Prevent submit the form
 document.getElementById("regform").addEventListener("add_btn", (e) => {
