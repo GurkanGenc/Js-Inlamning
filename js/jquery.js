@@ -1,6 +1,7 @@
 // Sliding Panel
-$(document).ready(function(){
-    $("#display").click(function(){
-      $("#panel").slideToggle("fast");
+
+$(function () {
+    $("#displayUser").click(function () {
+        $(".panel").slideToggle("fast");
     });
-  });
+});

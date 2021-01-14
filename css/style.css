@@ -24,12 +24,17 @@ html, body {
     }
 }
 
-#display, #panel {
+#display, .panel {
     border: 1px solid #c3c3c3;
     padding: 0.7rem 1rem;
 }
 
-#panel {
+.panel {
     width: auto;
-
+    /* list-style-type: none; */
+    display: none;
 }
+
+/* .lines {
+    
+} */

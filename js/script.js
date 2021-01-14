@@ -17,44 +17,36 @@ function uuidv4() {
     }
 
     get id() {
-        return uuidv4() // It can be put in the Person class
+        return uuidv4()
     }
 
     get fullName() {
         return `${this.firstName} ${this.lastName}`
     }
-    // set fullName(value) {
-    //     const values = value.split(' ')
-    //     this.firstName = values[0]
-    //     this.lastName = values[1]
-    // }
 }
 
-const user = new Person(
-    document.getElementById("firstName").value,
-    document.getElementById("lastName").value,
-    document.getElementById("email").value,
-    document.getElementById("phoneNumber").value,
-    document.getElementById("address").value,
-    document.getElementById("city").value,
-    document.getElementById("postCode").value
-    )
 
-// BUTTONS
-// Gives the list after buttons
 const displayUser = [];
+let user;
+// BUTTONS
 document.getElementById("add_btn").addEventListener("click", () => {
-    for(let i = 0; i < document.getElementsByTagName('input').length; i++) {
-        displayUser.push(document.getElementsByTagName('input')[i].value)
-    }
+    user = new Person(
+        document.getElementById("firstName").value,
+        document.getElementById("lastName").value,
+        document.getElementById("email").value,
+        document.getElementById("phoneNumber").value,
+        document.getElementById("address").value,
+        document.getElementById("city").value,
+        document.getElementById("postCode").value
+        )
+    displayUser.push(user)
     
-    displayUser.push(uuidv4())
-    console.log(displayUser)
+    console.log(user)
     CreateElements()
-    resetForm()
+    // resetForm()
 })
 
-// document.getElementById("change_btn").addEventListener("click", () => {
+// document.getElementById("edit_btn").addEventListener("click", () => {
 //     // document.getElementById("display").innerText = user.id
     
 // })
@@ -69,46 +61,46 @@ document.getElementById("add_btn").addEventListener("click", () => {
 
 // CREATE ELEMENTS
 function CreateElements() {
-    // display = document.createElement("div")
-    // display.id = "display"
-    // display.innerText = `${user.firstName}`
     
-    // panel = document.createElement("p")
-    // panel.id = "panel"
-    // panel.innerText = "Id: "
-    // panel.innerText = "E-post: "
-    // display.appendChild(panel)
+    var toggleDiv = document.createElement("div")
+    toggleDiv.id = `${user.id}`
+    var display = document.createElement("div")
+    display.id = "display"
+    // display.id = `${user.id}-display`
+    display.className = "display"
+    display.innerText = user.fullName
+    document.getElementById("displayUser").appendChild(toggleDiv)
+    toggleDiv.appendChild(display)
 
-    document.getElementById("display").innerText = `${displayUser[0]}` + `${displayUser[1]}`
+    var panel = document.createElement("div")
+    // panel.id = `${user.id}-panel`
+    panel.className = "panel"
+    toggleDiv.appendChild(panel)
 
-    for(let i = 2; i < displayUser.length; i++) {
-        let panel = document.createElement('li')
-        panel.id ="panel"
-        panel.textContent = displayUser[i]
-        document.querySelector('#display').appendChild(panel)
-    }
+
+    var idLine = document.createElement("p")
+    idLine.innerHTML = `Id: ${user.id}`
+
+    var mailLine = document.createElement("p")
+    mailLine.innerHTML = `E-post: ${user.email}`
+
+    var phoneLine = document.createElement("p")
+    phoneLine.innerHTML = `Phone: ${user.phoneNumber}`
+
+    var addressLine = document.createElement("p")
+    addressLine.innerHTML = `Address: ${user.address}`
+    
+    // Those classes -even Bootstrap- work!
+    // idLine.className = "lines d-flex"
+    // mailLine.className = "lines"
+    // phoneLine.className = "lines"
+    // addressLine.className = "lines"
+
+    panel.appendChild(idLine)
+    panel.appendChild(mailLine)
+    panel.appendChild(phoneLine)
+    panel.appendChild(addressLine)
 }
-
-
-// FILL PANEL!!!!
-function fillPanel() {
-    idElement = document.createElement("p")
-    idElement.innerText = `Id: ${userdata.id}`
-  
-    emailElement = document.createElement("p")
-    emailElement.innerText = `E-mail: ${userdata.email}`
-    emailElement.id = `${userdata.id}-email`
-  
-    phoneElement = document.createElement("p")
-    phoneElement.innerText = `Phone: ${userdata.phone}`
-    phoneElement.id = `${userdata.id}-phone`
-  
-    panelDiv.appendChild(idElement)
-    panelDiv.appendChild(emailElement)
-    panelDiv.appendChild(phoneElement)
-  }
-
-
 
 // Prevent submit the form
 document.getElementById("regform").addEventListener("add_btn", (e) => {
