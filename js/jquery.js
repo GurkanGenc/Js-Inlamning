@@ -1,7 +1,5 @@
 // Sliding Panel
 
-$(function () {
-    $("#displayUser").click(function () {
-        $(".panel").slideToggle("fast");
-    });
-});
+$("body").on("click", "#display", function(){
+    $('.panel').not($(this).next(".panel").slideToggle("slow")).slideUp("slow");
+  });

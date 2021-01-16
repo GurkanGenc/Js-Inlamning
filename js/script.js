@@ -23,11 +23,15 @@ function uuidv4() {
     get fullName() {
         return `${this.firstName} ${this.lastName}`
     }
-}
 
+    get fullAddress() {
+        return `${this.address} ${this.city} ${this.postCode}`
+    }
+}
 
 const displayUser = [];
 let user;
+
 // BUTTONS
 document.getElementById("add_btn").addEventListener("click", () => {
     user = new Person(
@@ -41,7 +45,7 @@ document.getElementById("add_btn").addEventListener("click", () => {
         )
     displayUser.push(user)
     
-    console.log(user)
+    // console.log(user)
     CreateElements()
     // resetForm()
 })
@@ -61,40 +65,43 @@ document.getElementById("add_btn").addEventListener("click", () => {
 
 // CREATE ELEMENTS
 function CreateElements() {
-    
+    // Main div that wrap the display and the panel divs 
     var toggleDiv = document.createElement("div")
-    toggleDiv.id = `${user.id}`
+    // Unique id is needed to see every panel under a different display div
+                // toggleDiv.id = `${user.id}`
+    // Display div that contains first and fast name
     var display = document.createElement("div")
     display.id = "display"
-    // display.id = `${user.id}-display`
-    display.className = "display"
+    display.className = "display-name"
     display.innerText = user.fullName
+    // Append the sub-divs to the super-div
     document.getElementById("displayUser").appendChild(toggleDiv)
     toggleDiv.appendChild(display)
-
+    // Panel that holds the user info
     var panel = document.createElement("div")
-    // panel.id = `${user.id}-panel`
     panel.className = "panel"
+    // Append the panel to the main div
     toggleDiv.appendChild(panel)
 
-
+    // Filling the panel
     var idLine = document.createElement("p")
-    idLine.innerHTML = `Id: ${user.id}`
+    // idLine.innerHTML = `Id: ${user.id}`
+    idLine.innerHTML = "Id: ".bold() + user.id
 
     var mailLine = document.createElement("p")
-    mailLine.innerHTML = `E-post: ${user.email}`
+    mailLine.innerHTML = "E-post: ".bold() + user.email
 
     var phoneLine = document.createElement("p")
-    phoneLine.innerHTML = `Phone: ${user.phoneNumber}`
+    phoneLine.innerHTML = "Phone: ".bold() + user.phoneNumber
 
     var addressLine = document.createElement("p")
-    addressLine.innerHTML = `Address: ${user.address}`
+    addressLine.innerHTML = "Address: ".bold() + user.fullAddress
     
     // Those classes -even Bootstrap- work!
-    // idLine.className = "lines d-flex"
-    // mailLine.className = "lines"
-    // phoneLine.className = "lines"
-    // addressLine.className = "lines"
+    idLine.className = "lines"
+    mailLine.className = "lines"
+    phoneLine.className = "lines"
+    addressLine.className = "lines"
 
     panel.appendChild(idLine)
     panel.appendChild(mailLine)
@@ -113,6 +120,7 @@ let texts = document.getElementsByClassName("text-input")
 for (let input of texts) {
     input.addEventListener("keyup", (e) => {
         validateTextInputs(e)
+        // ValidateForm()
     })
 }
 // Function for TEXT input validation
@@ -122,8 +130,11 @@ function validateTextInputs(e) {
         document.getElementById("add_btn").disabled = true
     }
     else {
-        document.getElementById(`${e.target.id}-error`).innerText = ""
+        
+            document.getElementById(`${e.target.id}-error`).innerText = ""
         document.getElementById("add_btn").disabled = false
+        
+        
     }
 }
 //#endregion
@@ -186,27 +197,88 @@ function resetForm() {
     document.getElementById('regform').reset()
 }
 
-// SUBMIT the form
-// var at = document.getElementById("email").value.indexOf("@");
-// var age = document.getElementById("age").value;
-// var fname = document.getElementById("fname").value;
-// submitOK = "true";
-
-// if (fname.length > 10) {
-//   alert("The name may have no more than 10 characters");
-//   submitOK = "false";
+// Form validation
+// function ValidateForm() {
+//     var isFormValid = true;
+//     if (user.firstName == "" && user.lastName == "" && user.email == "" && user.phoneNumber == "" && user.address == "" && user.city == "" && user.postCode == "") {
+//         // document.getElementById(`${e.target.id}-error`).innerText = "Enter more than 2 letters"
+//         isFormValid = false
+//         document.getElementById("add_btn").disabled = true
+//     }
+//     else {
+//         isFormValid = true
+//         document.getElementById("add_btn").disabled = false
+//     }
+        
 // }
 
-// if (isNaN(age) || age < 1 || age > 100) {
-//   alert("The age must be a number between 1 and 100");
-//   submitOK = "false";
+// document.getElementById('add-btn').addEventListener('submit', function() {
+//     if (user.firstName == "" && user.lastName == "" && user.email == "" && user.phoneNumber == "" && user.address == "" && user.city == "" && user.postCode == "") {
+//         // document.getElementById(`${e.target.id}-error`).innerText = "Enter more than 2 letters"
+//         document.getElementById("add_btn").disabled = true
+//     }
+//     else
+//         document.getElementById("add_btn").disabled = false
+// })
+
+// document.getElementById('regform').addEventListener('submit', (e) => {
+//     // e.preventDefault()
+
+//     let errors = []
+
+//     for (let element of e.target.elements) {
+//         switch(element.tagName) {
+//             case 'INPUT': 
+//                 errors.push(validateInput(element))
+//                 break;
+//             case 'SELECT': 
+//                 errors.push(validateSelect(element))
+//                 break;
+//         }
+//     }
+
+//     if(!errors.includes(true))
+//         window.location.replace("success.php");
+// })
+
+// function validateInput(element) {
+
+//     if(element.required) {
+//         if(element.value == "")  {
+//             console.log('fältet uppfyller inte kravet på 2 tecken')
+//             return true
+//         }
+//     }
+
+//     return false
 // }
 
-// if (at == -1) {
-//   alert("Not a valid e-mail!");
-//   submitOK = "false";
+// const validateSelect = (element) => {
+//     if(element.required) {
+//         if(element.value === '') {
+//             console.log('Du måste ange en stad')
+//             return true
+//         }  
+//     }
+
+//     return false
 // }
 
-// if (submitOK == "false") {
-//   return false;
-// }
+function validateForm() {
+    // Retrieving the values of form elements 
+    // var name = document.getElementById("firstName").value;
+    // var email = document.contactForm.email.value;
+    // var mobile = document.contactForm.mobile.value;
+    // var country = document.contactForm.country.value;
+    // var gender = document.contactForm.gender.value;
+    
+	// Defining error variables with a default value
+    var nameErr = emailErr = mobileErr = countryErr = genderErr = true;
+    
+    // Validate name - It works
+    // if (document.getElementById("firstName").value == "" || document.getElementById("lastName").value == "" || document.getElementById("email").value == "" || document.getElementById("phoneNumber").value == "" || document.getElementById("address").value == "" || document.getElementById("city").value == "" || document.getElementById("postCode").value == "") {
+    //     document.getElementById("add_btn").disabled = true
+    // } else {
+    //     document.getElementById("add_btn").disabled = false
+    // }
+}

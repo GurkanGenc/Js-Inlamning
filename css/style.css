@@ -1,7 +1,7 @@
 * {
 	box-sizing: border-box;
 }
-
+/* To disable the arrows in the number input fields */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -24,17 +24,18 @@ html, body {
     }
 }
 
-#display, .panel {
+#display {
     border: 1px solid #c3c3c3;
+    border-radius: 5px;
     padding: 0.7rem 1rem;
+    font-weight: bold;
+    text-transform: capitalize;
 }
 
 .panel {
     width: auto;
-    /* list-style-type: none; */
+    border: 1px solid #c3c3c3;
+    border-radius: 5px;
+    padding: 0.7rem 1rem;
     display: none;
 }
-
-/* .lines {
-    
-} */
